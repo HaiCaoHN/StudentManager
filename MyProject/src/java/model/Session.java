@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Session {
     private int id ;
     private String room;
-    private Group gid;
+    private Group group;
     private Lecture taker;
     private boolean status;
     private Date date;
@@ -35,13 +35,14 @@ public class Session {
         this.room = room;
     }
 
-    public Group getGid() {
-        return gid;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGid(Group gid) {
-        this.gid = gid;
+    public void setGroup(Group group) {
+        this.group = group;
     }
+
 
     public Lecture getTaker() {
         return taker;

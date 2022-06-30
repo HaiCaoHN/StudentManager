@@ -14,12 +14,6 @@ public class TimeSlot {
     private int slot;
     private Time start,end;
 
-    public TimeSlot(int slot, Time start, Time end) {
-        this.slot = slot;
-        this.start = start;
-        this.end = end;
-    }
-
     public int getSlot() {
         return slot;
     }
