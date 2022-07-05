@@ -14,7 +14,7 @@
     </head>
     <body>
         Attendance for with lecture ${session.taker.id} at slot ${session.slot.slot} on ${session.date} <br>
-        <form action="action">
+        <form action="attend" method="POST">
             <table border="1" style=" margin-top: 20px; width: 70%;">
                 <thead>
                     <tr>

@@ -4,19 +4,18 @@
  */
 package dal;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Attendance;
 
 /**
  *
  * @author HAICAO
  */
-public class AttendanceDBContext extends DBContext<Attendance>{
-
-    @Override
-    public ArrayList<Attendance> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+public class AttendanceDBContext extends DBContext<Attendance> {
 
     @Override
     public ArrayList<Attendance> list(String identity) {
@@ -30,7 +29,26 @@ public class AttendanceDBContext extends DBContext<Attendance>{
 
     @Override
     public void insert(Attendance entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String sql = "INSERT INTO [Attendance]\n"
+                    + "           ([sid]\n"
+                    + "           ,[sessionID]\n"
+                    + "           ,[attend]\n"
+                    + "           ,[comment])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+            PreparedStatement stm = conection.prepareStatement(sql);
+            stm.setInt(1, entity.getSid().getId());
+            stm.setInt(2, entity.getSession().getId());
+            stm.setBoolean(3, entity.isAttend());
+            stm.setString(4, entity.getComment());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -42,6 +60,10 @@ public class AttendanceDBContext extends DBContext<Attendance>{
     public void update(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
+
+    @Override
+    public ArrayList<Attendance> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
