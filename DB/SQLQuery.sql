@@ -9,7 +9,7 @@ group by  sname, g.gid, taker, code, [date]
 select g.gid, room, s.slot, [date], [status]  
 		from [Group] g inner join [Session] s on g.gid = s.gid
 					   inner join TimeSlot t on t.slot = s.slot
-where date > '2022/12/06' and date < '2022/12/10'
+where date >= '2022/12/06' and date <= '2022/12/12' and taker = 'tuanVM';
 
 -- SQL take data for view table
 select gid, sname, code, [date], attend from Student s inner join Attendance a on s.sid = a.sid

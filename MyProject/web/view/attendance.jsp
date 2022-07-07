@@ -33,8 +33,8 @@
                             <td>${e.student.code}</td>
                             <td>${e.student.name}</td>
                             <td>
-                                <input type="radio" name="check_${e.student.id}" checked="checked" /> absent
-                                <input type="radio" name="check_${e.student.id}" /> present
+                                <input type="radio" name="check_${e.student.id}_${e.id}" checked="checked" /> absent
+                                <input type="radio" name="check_${e.student.id}_${e.id}" /> present
                             </td>
                             <td><input type="text" name="comment"></td>
                             <td>${e.group.lecture}</td>
