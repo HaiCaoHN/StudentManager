@@ -5,11 +5,14 @@
 package dal;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Attendance;
+import model.Session;
+import model.Student;
 
 /**
  *
@@ -17,9 +20,15 @@ import model.Attendance;
  */
 public class AttendanceDBContext extends DBContext<Attendance> {
 
-    @Override
-    public ArrayList<Attendance> list(String identity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean isExist(Attendance entity) {
+        boolean isExist = false;
+        ArrayList<Attendance> list = list();
+        for (Attendance a : list) {
+            if (a.getSid().getId() == entity.getSid().getId() && a.getSession().getId() == entity.getSession().getId()) {
+                isExist = true;
+            }
+        }
+        return isExist;
     }
 
     @Override
@@ -58,11 +67,49 @@ public class AttendanceDBContext extends DBContext<Attendance> {
 
     @Override
     public void update(Attendance entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String sql = "UPDATE [Attendance]\n"
+                    + "   SET [attend] = ?\n"
+                    + "      ,[comment] = ?\n"
+                    + " WHERE [sid] = ? and [sessionID] = ?";
+            PreparedStatement stm = conection.prepareStatement(sql);
+            stm.setBoolean(1, entity.isAttend());
+            stm.setString(2, entity.getComment());
+            stm.setInt(3, entity.getSid().getId());
+            stm.setInt(4, entity.getSession().getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @Override
     public ArrayList<Attendance> list() {
+        ArrayList<Attendance> list = new ArrayList<>();
+        try {
+
+            String sql = "select sid,sessionID from Attendance";
+            PreparedStatement stm = conection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Attendance a = new Attendance();
+                Student s = new Student();
+                Session session = new Session();
+                s.setId(rs.getInt("sid"));
+                session.setId(rs.getInt("sessionID"));
+                a.setSid(s);
+                a.setSession(session);
+                list.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    @Override
+    public ArrayList<Attendance> list(String identity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

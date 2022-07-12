@@ -28,4 +28,10 @@ public class Week {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Week{" + "startDate=" + startDate + ", endDate=" + endDate + '}';
+    }
+    
 }

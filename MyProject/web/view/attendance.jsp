@@ -27,24 +27,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.list}" var="e">
+                    <c:forEach items="${sessionScope.list}" var="e">
                         <tr>
                             <td>${e.group.id}</td>
                             <td>${e.student.code}</td>
                             <td>${e.student.name}</td>
                             <td>
-                                <input type="radio" name="check_${e.student.id}_${e.id}" checked="checked" /> absent
-                                <input type="radio" name="check_${e.student.id}_${e.id}" /> present
+                                <input type="radio" name="check_${e.student.id}" checked="checked" value="false"/> absent
+                                <input type="radio" name="check_${e.student.id}" value="true"/> present
                             </td>
-                            <td><input type="text" name="comment"></td>
+                            <td><input type="text" name="comment_${e.student.id}"></td>
                             <td>${e.group.lecture}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table> <br>
             <input type="submit" value="Save">
-
         </form>
-
     </body>
 </html>

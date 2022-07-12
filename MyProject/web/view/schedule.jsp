@@ -39,8 +39,8 @@
                         Year: 2022 <br/>
                         Week:
                         <select onchange="Submit()" id="week" name="week_index">
-                            <c:forEach items="${requestScope.weeks}" var="w">
-                                <option  value="${requestScope.weeks.indexOf(w)}"
+                            <c:forEach items="${sessionScope.weeks}" var="w">
+                                <option  value="${sessionScope.weeks.indexOf(w)}"
                                          <c:forEach var="i" begin="0" end="6">
                                              <c:if test="${requestScope.date eq w.startDate.plusDays(i)}">
                                                  selected = "selected";
@@ -67,12 +67,18 @@
                 </tr
                 <c:forEach items="${requestScope.slots}" var="slot">
                     <tr>
-                        <td>${slot.slot}</td>
+                        <td>Slot ${slot.slot} </td>
                         <c:forEach var="i" begin="0" end="6">
                             <td>
                                 <c:forEach items="${requestScope.sessions}" var="s">
                                     <c:if test="${s.slot.slot eq slot.slot and requestScope.week.startDate.plusDays(i) eq s.date.toLocalDate()}">
-                                        ${s.date}
+                                        <a href="attend?sessionID=${s.id}">${s.group.subject}</a> - <br/> at ${s.room} <br/> 
+                                        <c:if test="${s.status ne true}">
+                                            (not yet)
+                                        </c:if>
+                                        <c:if test="${s.status eq true}">
+                                            (attended)
+                                        </c:if>
                                     </c:if>
                                 </c:forEach> 
                             </td>

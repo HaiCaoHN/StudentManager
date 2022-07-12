@@ -26,8 +26,8 @@ public class SessionDBContext extends DBContext<Session> {
     public ArrayList<Session> listSessionByLecture(Lecture lec, LocalDate startDate, LocalDate endDate) {
         ArrayList<Session> sessions = new ArrayList<>();
         try {
-            
-            String sql = "select g.gid, room, s.slot, [date], [status]  \n"
+
+            String sql = "select sessionID, g.gid, room, subjectID, s.slot, [date], [status]  \n"
                     + "		from [Group] g inner join [Session] s on g.gid = s.gid\n"
                     + "					   inner join TimeSlot t on t.slot = s.slot\n"
                     + "where date >= ? and date <= ? and taker = ?";
@@ -36,12 +36,14 @@ public class SessionDBContext extends DBContext<Session> {
             stm.setDate(2, Date.valueOf(endDate));
             stm.setString(3, lec.getId());
             ResultSet rs = stm.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Session s = new Session();
+                s.setId(rs.getInt("sessionID"));
                 s.setDate(rs.getDate("date"));
                 s.setRoom(rs.getString("room"));
                 s.setStatus(rs.getBoolean("status"));
                 Group g = new Group();
+                g.setSubject(rs.getString("subjectID"));
                 g.setId(rs.getString("gid"));
                 s.setGroup(g);
                 TimeSlot slot = new TimeSlot();
@@ -67,7 +69,32 @@ public class SessionDBContext extends DBContext<Session> {
 
     @Override
     public Session get(Session entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Session s = new Session();
+        try {
+            String sql = "select sessionID, gid, room, slot, date, taker, status from Session where sessionID = ?";
+            PreparedStatement stm = conection.prepareStatement(sql);
+            stm.setInt(1, entity.getId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                s.setId(rs.getInt("sessionID"));
+                s.setDate(rs.getDate("date"));
+                Group group = new Group();
+                group.setId(rs.getString("gid"));
+                s.setGroup(group);
+                TimeSlot time = new TimeSlot();
+                time.setSlot(rs.getInt("slot"));
+                s.setSlot(time);
+                Lecture lecture = new Lecture();
+                lecture.setId(rs.getString("taker"));
+                s.setTaker(lecture);
+                s.setRoom(rs.getString("room"));
+                s.setStatus(rs.getBoolean("status"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 
     @Override
