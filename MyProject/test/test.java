@@ -1,12 +1,4 @@
 
-import dal.AccountDBContext;
-import dal.EnrollDBContext;
-import dal.SessionDBContext;
-import java.util.ArrayList;
-import model.Account;
-import model.Feature;
-import model.Role;
-import model.Session;
 
 
 
@@ -21,15 +13,10 @@ import model.Session;
 public class test {
 
     public static void main(String[] args) {
-        AccountDBContext db = new AccountDBContext();
-        Account a = db.getByUsernamePassword("sonnt", "sonnt");
-        System.out.println(a.getUsername() + ',' + a.getDisplayName());
-        for (Role role : a.getRoles()) {
-            System.out.println(role.getName());
-            ArrayList<Feature> flist = role.getFeatures();
-            for (Feature feature : flist) {
-                System.out.println(feature);
-            }
+        String s = "";
+        for(int i =3;i<=19;i++) {
+            s+= "("+ i+ ",'SE1630-CSD'),\n";
         }
+        System.out.println(s);
     }
 }

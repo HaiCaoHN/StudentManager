@@ -88,7 +88,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         ArrayList<Attendance> list = new ArrayList<>();
         try {
 
-            String sql = "select sid,sessionID from Attendance";
+            String sql = "select sid,sessionID,attend from Attendance";
             PreparedStatement stm = conection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -99,6 +99,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 session.setId(rs.getInt("sessionID"));
                 a.setSid(s);
                 a.setSession(session);
+                a.setAttend(rs.getBoolean("attend"));
                 list.add(a);
             }
         } catch (SQLException ex) {

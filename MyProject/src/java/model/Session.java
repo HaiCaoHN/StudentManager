@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,7 +19,16 @@ public class Session {
     private boolean status;
     private Date date;
     private TimeSlot slot;
+    private ArrayList<Attendance> attends = new ArrayList<>();
 
+    public ArrayList<Attendance> getAttends() {
+        return attends;
+    }
+
+    public void setAttends(ArrayList<Attendance> attends) {
+        this.attends = attends;
+    }
+    
     public int getId() {
         return id;
     }

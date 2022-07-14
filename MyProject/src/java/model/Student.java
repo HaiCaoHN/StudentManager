@@ -17,7 +17,34 @@ public class Student {
     private boolean gender;
     private Date dob;
     private ArrayList<Enroll> enrolls = new ArrayList<>();
+    private ArrayList<Attendance> attends = new ArrayList<>();
+    
+    public boolean isAttend(Session s) {
+        for(Attendance a: attends) {
+            if(a.getSession().getId() == s.getId()) {
+                if(a.isAttend()) return true;
+            }
+        }
+        return false;
+    }
+    
+    public String getComment(Session s) {
+        String comment= "";
+        for(Attendance a: attends) {
+            if(a.getSession().getId() == s.getId()) {
+                comment = a.getComment();
+            }
+        }
+        return comment;
+    }
+    public ArrayList<Attendance> getAttends() {
+        return attends;
+    }
 
+    public void setAttends(ArrayList<Attendance> attends) {
+        this.attends = attends;
+    }
+    
     public ArrayList<Enroll> getEnrolls() {
         return enrolls;
     }
@@ -66,4 +93,11 @@ public class Student {
         this.dob = dob;
     }
     
+    public int getAbsent() {
+        int count=0;
+        for(Attendance a : attends) {
+            if(!a.isAttend()) count++;
+        }
+        return count;
+    }
 }

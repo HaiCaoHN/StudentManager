@@ -23,7 +23,16 @@
     </head>
 
     <body>
-
+        <nav>
+            <a href="schedule">Home</a>
+            <a href="list_group">View Classes</a>
+            <c:if test="${sessionScope.account ne null}">
+                <a href="logout">Logout</a>
+            </c:if>
+            <c:if test="${sessionScope.account eq null}">
+                <a href="login">Login</a>
+            </c:if>
+        </nav>
         <form action="schedule" method="POST" id="schedule_form">
             <h2>Activities for ${lecture.id}</h2>
             <table border="1" id="schedule_table">
@@ -65,7 +74,14 @@
                             <td>
                                 <c:forEach items="${requestScope.sessions}" var="s">
                                     <c:if test="${s.slot.slot eq slot.slot and requestScope.week.startDate.plusDays(i) eq s.date.toLocalDate()}">
-                                        <a href="attend?sessionID=${s.id}">${s.group.subject}</a> - <br/> at ${s.room} <br/> 
+                                        <a 
+                                            <c:if test="${s.status ne true}">
+                                                href="attend?sessionID=${s.id}"
+                                            </c:if>
+                                            <c:if test="${s.status eq true}">
+                                                href="view?sessionID=${s.id}"
+                                            </c:if>
+                                           >${s.group.subject}</a> - <br/> at ${s.room} <br/> 
                                         <c:if test="${s.status ne true}">
                                             (not yet)
                                         </c:if>

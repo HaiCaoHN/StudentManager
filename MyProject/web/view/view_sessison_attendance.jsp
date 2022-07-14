@@ -1,6 +1,6 @@
 <%-- 
-    Document   : attendance
-    Created on : Jun 30, 2022, 9:27:45 PM
+    Document   : view_sessison_attendance
+    Created on : Jul 14, 2022, 8:47:26 PM
     Author     : HAICAO
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Attendance Page</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <nav>
@@ -24,7 +24,7 @@
             </c:if>
         </nav>
         Attendance for with lecture ${session.taker.id} at slot ${session.slot.slot} on ${session.date} <br>
-        <form action="attend" method="POST">
+        <form action="view" method="POST">
             <table border="1" style=" margin-top: 20px; width: 70%;">
                 <thead>
                     <tr>
@@ -38,24 +38,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${sessionScope.enrolls}" var="e">
+                    <c:forEach items="${requestScope.enrolls}" var="e">
                         <tr>
                             <td>${enrolls.indexOf(e)+1}</td>
                             <td>${e.group.id}</td>
                             <td>${e.student.code}</td>
                             <td>${e.student.name}</td>
                             <td>
-                                <input type="radio" name="check_${e.student.id}" checked="checked" 
-                                       value="false"/> absent
-                                <input type="radio" name="check_${e.student.id}" value="true"/> present
+                                <c:if test="${!e.student.isAttend(session)}">
+                                    absent
+                                </c:if>
+
+                                <c:if test="${e.student.isAttend(session)}">
+                                    present
+                                </c:if>
                             </td>
-                            <td><input type="text" name="comment_${e.student.id}"></td>
+                            <td>${e.student.getComment(session)}</td>
                             <td>${e.group.lecture}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table> <br>
-            <input type="submit" value="Save">
+            <input type="submit" value="Edit">
         </form>
     </body>
 </html>

@@ -4,6 +4,7 @@
     Author     : HAICAO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,5 +19,8 @@
             <input type="password" placeholder="Password" name="pass"/> <br/>
             <input type="submit" value="Login" class="login"/>
         </form>
+        <c:if test="${requestScope.inform ne null}">
+            ${requestScope.inform}
+        </c:if>
     </body>
 </html>

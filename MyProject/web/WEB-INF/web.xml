@@ -12,6 +12,18 @@
         <servlet-name>ScheduleController</servlet-name>
         <servlet-class>controller.ScheduleController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GroupListController</servlet-name>
+        <servlet-class>controller.GroupListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewGroupAllAttendanceController</servlet-name>
+        <servlet-class>controller.ViewGroupAllAttendanceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthienticationController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>ScheduleController</servlet-name>
         <url-pattern>/schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupListController</servlet-name>
+        <url-pattern>/list_group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewGroupAllAttendanceController</servlet-name>
+        <url-pattern>/view_all</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
