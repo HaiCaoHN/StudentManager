@@ -1,6 +1,11 @@
 
+import dal.AccountDBContext;
 import dal.EnrollDBContext;
 import dal.SessionDBContext;
+import java.util.ArrayList;
+import model.Account;
+import model.Feature;
+import model.Role;
 import model.Session;
 
 
@@ -16,11 +21,15 @@ import model.Session;
 public class test {
 
     public static void main(String[] args) {
-        EnrollDBContext db = new EnrollDBContext();
-        SessionDBContext dbSession = new SessionDBContext();
-        Session s = new Session();
-        s.setId(12);
-        Session session = dbSession.get(s);
-        System.out.println(session.getRoom());
+        AccountDBContext db = new AccountDBContext();
+        Account a = db.getByUsernamePassword("sonnt", "sonnt");
+        System.out.println(a.getUsername() + ',' + a.getDisplayName());
+        for (Role role : a.getRoles()) {
+            System.out.println(role.getName());
+            ArrayList<Feature> flist = role.getFeatures();
+            for (Feature feature : flist) {
+                System.out.println(feature);
+            }
+        }
     }
 }

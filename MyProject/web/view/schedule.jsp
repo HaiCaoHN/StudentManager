@@ -23,16 +23,9 @@
     </head>
 
     <body>
-        <form action="schedule">
-            <div style="text-align:center;">
-                Campus: <select>
-                    <option> FU-HL</option>
-                </select>  </div>
-            <div style="text-align: center;">Lecture: <input type="text" name="lecture" value="sonnt"> 
-                <input type="submit" value="View"> </div>
-        </form>
 
         <form action="schedule" method="POST" id="schedule_form">
+            <h2>Activities for ${lecture.id}</h2>
             <table border="1" id="schedule_table">
                 <tr>
                     <td>

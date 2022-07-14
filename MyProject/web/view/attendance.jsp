@@ -18,6 +18,7 @@
             <table border="1" style=" margin-top: 20px; width: 70%;">
                 <thead>
                     <tr>
+                        <td>No</td>
                         <td>Group</td>
                         <td>Code</td>
                         <td>Name</td>
@@ -29,11 +30,13 @@
                 <tbody>
                     <c:forEach items="${sessionScope.list}" var="e">
                         <tr>
+                            <td>${list.indexOf(e)+1}</td>
                             <td>${e.group.id}</td>
                             <td>${e.student.code}</td>
                             <td>${e.student.name}</td>
                             <td>
-                                <input type="radio" name="check_${e.student.id}" checked="checked" value="false"/> absent
+                                <input type="radio" name="check_${e.student.id}" checked="checked" 
+                                       value="false"/> absent
                                 <input type="radio" name="check_${e.student.id}" value="true"/> present
                             </td>
                             <td><input type="text" name="comment_${e.student.id}"></td>

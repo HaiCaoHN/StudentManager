@@ -23,7 +23,7 @@ import model.Student;
  *
  * @author HAICAO
  */
-public class AttendanceController extends HttpServlet {
+public class AttendanceController extends BaseRequiredAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,15 +50,16 @@ public class AttendanceController extends HttpServlet {
      */
     SessionDBContext dbSession = new SessionDBContext();
     EnrollDBContext dbEnroll = new EnrollDBContext();
-
+    AttendanceDBContext dbAttend = new AttendanceDBContext();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String sid = request.getParameter("sessionID");
         Session s = new Session();
         s.setId(Integer.parseInt(sid));
         Session session = dbSession.get(s);
         ArrayList<Enroll> list = dbEnroll.listEnrollBySession(session);
+        
         request.getSession().setAttribute("session", session);
         request.getSession().setAttribute("list", list);
         request.getRequestDispatcher("view/attendance.jsp").forward(request, response);
@@ -73,9 +74,10 @@ public class AttendanceController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AttendanceDBContext attendDB = new AttendanceDBContext();
+        SessionDBContext sessionDB = new SessionDBContext();
         ArrayList<Enroll> list = (ArrayList<Enroll>) request.getSession().getAttribute("list");
         for (Enroll enroll : list) {
             Attendance attendance = new Attendance();
@@ -85,12 +87,15 @@ public class AttendanceController extends HttpServlet {
             attendance.setComment(comment);
             attendance.setSid(enroll.getStudent());
             Session s = (Session) request.getSession().getAttribute("session");
+            s.setStatus(true);
+            sessionDB.updateStatus(s);
             attendance.setSession(s);
             if (!attendDB.isExist(attendance)) {
                 attendDB.insert(attendance);
             }
             else attendDB.update(attendance);
         }
+        response.sendRedirect("/MyProject/schedule");
     }
 
     /**

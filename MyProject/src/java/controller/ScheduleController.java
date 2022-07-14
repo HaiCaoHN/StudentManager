@@ -4,17 +4,18 @@
  */
 package controller;
 
+import dal.LectureDBContext;
 import dal.SessionDBContext;
 import dal.TimeSlotDBContext;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import model.Account;
 import model.Lecture;
 import model.Session;
 import model.Week;
@@ -23,7 +24,8 @@ import model.Week;
  *
  * @author HAICAO
  */
-public class ScheduleController extends HttpServlet {
+public class ScheduleController  extends BaseRequiredAuthenticationController{
+
 
     public ArrayList<Week> getWeeksOfYear() {
         ArrayList<Week> weeks = new ArrayList<>();
@@ -78,21 +80,20 @@ public class ScheduleController extends HttpServlet {
     
     SessionDBContext sessionDB = new SessionDBContext();
     TimeSlotDBContext slotDB = new TimeSlotDBContext();
-
+    LectureDBContext lecDB = new LectureDBContext();
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ArrayList<Week> weeks = getWeeksOfYear();
         LocalDate currentDate = LocalDate.now();
         Week currentWeek = getWeekByDate(weeks, currentDate);
-        //get session
-        sessionDB = new SessionDBContext();
-        Lecture lec = new Lecture();
-        lec.setId("tuanVM");
+        Account user = (Account) request.getSession().getAttribute("account");
+        Lecture lec = lecDB.getLectureByUsername(user);
         ArrayList<Session> sessions = sessionDB.listSessionByLecture(lec, currentWeek.getStartDate(), currentWeek.getEndDate());
+        session.setAttribute("lecture", lec);
         session.setAttribute("weeks", weeks);
-        //set attributes
         request.setAttribute("slots", slotDB.list());
         request.setAttribute("date", currentDate);
         request.setAttribute("sessions", sessions);
@@ -109,16 +110,15 @@ public class ScheduleController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ArrayList<Week> weeks = (ArrayList<Week>)request.getSession().getAttribute("weeks");
         int index = Integer.parseInt(request.getParameter("week_index"));
         Week w = weeks.get(index);
         LocalDate currentDate = w.getStartDate();
         Week currentWeek = getWeekByDate(weeks, currentDate);
-        //get session
-        Lecture lec = new Lecture();
-        lec.setId("tuanVM");
+        Lecture lec = (Lecture) request.getSession().getAttribute("lecture");
         ArrayList<Session> sessions = sessionDB.listSessionByLecture(lec, currentWeek.getStartDate(), currentWeek.getEndDate());
         //set attributes
         request.setAttribute("sessions", sessions);

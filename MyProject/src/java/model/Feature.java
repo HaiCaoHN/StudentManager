@@ -20,6 +20,11 @@ public class Feature {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Feature{" + "id=" + id + ", name=" + name + ", url=" + url + ", roles=" + roles + '}';
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -81,7 +81,6 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     @Override
