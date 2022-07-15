@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Group;
 import model.Session;
 import model.Student;
 
@@ -18,6 +19,26 @@ import model.Student;
  * @author HAICAO
  */
 public class StudentDBContext extends DBContext<Student> {
+    
+    public ArrayList<Student> listStudentByGroup(Group group) {
+        ArrayList<Student> list = new ArrayList<>();
+        try {
+            String sql = "select e.gid, sname, code, e.sid from enroll e inner join Student s on e.sid =s.sid where e.gid = ?";
+            PreparedStatement stm = conection.prepareStatement(sql);
+            stm.setString(1, group.getId());
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()) {
+                Student s = new Student();
+                s.setId(rs.getInt("sid"));
+                s.setName(rs.getString("sname"));
+                s.setCode(rs.getString("code"));
+                list.add(s);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error when list student by group");
+        }
+        return list;
+    }
 
     public ArrayList<Student> listStudentBySession(Session session) {
         ArrayList<Student> students = new ArrayList<>();

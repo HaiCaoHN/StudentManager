@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Attendance;
+import model.Group;
 import model.Session;
 import model.Student;
 
@@ -88,15 +89,20 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         ArrayList<Attendance> list = new ArrayList<>();
         try {
 
-            String sql = "select sid,sessionID,attend from Attendance";
+            String sql = "select aid,sid, a.sessionID, date, s.gid, attend \n"
+                    + "from Attendance a inner join Session s on s.sessionID = a.sessionID\n"
+                    + "order by date asc";
             PreparedStatement stm = conection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Attendance a = new Attendance();
                 Student s = new Student();
                 Session session = new Session();
+                Group g = new Group();
+                g.setId(rs.getString("gid"));
                 s.setId(rs.getInt("sid"));
                 session.setId(rs.getInt("sessionID"));
+                session.setGroup(g);
                 a.setSid(s);
                 a.setSession(session);
                 a.setAttend(rs.getBoolean("attend"));

@@ -45,9 +45,18 @@
                             <td>${e.student.code}</td>
                             <td>${e.student.name}</td>
                             <td>
-                                <input type="radio" name="check_${e.student.id}" checked="checked" 
-                                       value="false"/> absent
-                                <input type="radio" name="check_${e.student.id}" value="true"/> present
+                                <input type="radio" value="false" 
+                                       <c:if test="${!e.student.isAttend(session)}">
+                                           checked ="checked"
+                                       </c:if>
+                                       name="check_${e.student.id}">absent
+
+                                <input type="radio" value="true" 
+                                       <c:if test="${e.student.isAttend(session)}">
+                                           checked="checked"
+                                       </c:if>
+                                       name="check_${e.student.id}">present
+
                             </td>
                             <td><input type="text" name="comment_${e.student.id}"></td>
                             <td>${e.group.lecture}</td>

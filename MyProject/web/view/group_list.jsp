@@ -38,7 +38,7 @@
                     <td>${g.id}</td>
                     <td>${g.lecture}</td>
                     <td>${g.subject}</td>
-                    <td> <a href="view_all">View</a> </td>
+                    <td> <a href="view_all?gid=${g.id}">View</a> </td>
                 </tr>
             </c:forEach>
         </table>

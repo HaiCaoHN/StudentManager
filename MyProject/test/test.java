@@ -1,4 +1,10 @@
 
+import dal.AttendanceDBContext;
+import java.util.ArrayList;
+import model.Attendance;
+import model.Group;
+
+
 
 
 
@@ -13,10 +19,13 @@
 public class test {
 
     public static void main(String[] args) {
-        String s = "";
-        for(int i =3;i<=19;i++) {
-            s+= "("+ i+ ",'SE1630-CSD'),\n";
+        Group g = new Group();
+        g.setId("SE1651-PRJ");
+        AttendanceDBContext db = new AttendanceDBContext();
+        ArrayList<Attendance> list = db.list();
+        for (Attendance attendance : list) {
+            System.out.println(attendance.getSession().getId());
         }
-        System.out.println(s);
+        
     }
 }

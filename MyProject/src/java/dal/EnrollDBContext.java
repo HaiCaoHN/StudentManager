@@ -20,7 +20,7 @@ import model.Student;
  * @author HAICAO
  */
 public class EnrollDBContext extends DBContext<Enroll> {
-    
+
     public ArrayList<Enroll> listEnrollBySession(Session session) {
         ArrayList<Enroll> enrolls = new ArrayList<>();
         try {
@@ -33,7 +33,7 @@ public class EnrollDBContext extends DBContext<Enroll> {
             stm.setDate(2, session.getDate());
             stm.setInt(3, session.getSlot().getSlot());
             ResultSet rs = stm.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Enroll enroll = new Enroll();
                 Student s = new Student();
                 s.setId(rs.getInt("sid"));
@@ -49,7 +49,7 @@ public class EnrollDBContext extends DBContext<Enroll> {
         } catch (SQLException ex) {
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  enrolls;
+        return enrolls;
     }
 
     @Override
@@ -81,5 +81,5 @@ public class EnrollDBContext extends DBContext<Enroll> {
     public void update(Enroll entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

@@ -56,6 +56,14 @@ public class AttendanceController extends BaseRequiredAuthenticationController {
         s.setId(Integer.parseInt(sid));
         Session session = dbSession.get(s);
         ArrayList<Enroll> enrolls = dbEnroll.listEnrollBySession(session);
+        ArrayList<Attendance> attends = dbAttend.list();
+        for (Enroll enroll : enrolls) {
+            for (Attendance attend : attends) {
+                if(attend.getSid().getId() == enroll.getStudent().getId()) {
+                    enroll.getStudent().getAttends().add(attend);
+                }
+            }
+        }
         request.getSession().setAttribute("session", session);
         request.getSession().setAttribute("enrolls", enrolls);
         request.getRequestDispatcher("view/attendance.jsp").forward(request, response);
