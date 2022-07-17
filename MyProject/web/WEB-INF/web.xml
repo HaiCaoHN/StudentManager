@@ -25,8 +25,8 @@
         <servlet-class>controller.ViewGroupAllAttendanceController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DefaultController</servlet-name>
-        <servlet-class>controller.DefaultController</servlet-class>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>controller.Test</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthienticationController</servlet-name>
@@ -53,8 +53,8 @@
         <url-pattern>/view_all</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DefaultController</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/Test</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

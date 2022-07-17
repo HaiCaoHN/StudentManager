@@ -11,16 +11,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
-        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/loginTemplate.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="login" method="POST">
-            <input type="text" placeholder="Username" name="user"/> <br/>
-            <input type="password" placeholder="Password" name="pass"/> <br/>
-            <input type="submit" value="Login" class="login"/>
-        </form>
-        <c:if test="${requestScope.inform ne null}">
-            ${requestScope.inform}
-        </c:if>
+        
+
+        <div class="login-page">
+            <div class="form">
+                <form class="login-form" method="post" action="login">
+                    <p>Welcome</p>
+                    <input type="text" placeholder="Username" name="user"/>
+                    <input type="password" placeholder="Password" name="pass"/>
+                    <button type="submit">login</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

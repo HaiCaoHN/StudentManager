@@ -11,18 +11,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="css/view_all_template.css" rel="stylesheet" type="text/css"/>
+        <link href="css/nav_template.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <nav>
-            <a href="schedule">Home</a>
-            <c:if test="${sessionScope.account ne null}">
-                <a href="logout">Logout</a>
-            </c:if>
-            <c:if test="${sessionScope.account eq null}">
-                <a href="login">Login</a>
-            </c:if>    
-        </nav>
-        <table border="1">
+        <div class="hero">
+            <nav>
+                <ul>
+                    <li><a href="schedule">Home</a></li>
+                    <li><a href="list_group">View Classes</a></li>
+                    <li>
+                        <c:if test="${sessionScope.account ne null}">
+                            <a href="logout">Logout</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account eq null}">
+                            <a href="login">Login</a>
+                        </c:if>
+                    </li>
+                </ul>
+            </nav> 
+        </div>
+        <br/>
+        <table>
             <thead>
                 <tr id="head">
                     <td>No</td>
@@ -48,24 +58,30 @@
                 <td>${s.code}</td>
                 <td>${s.name}</td>
                 <td>${s.getAbsent()}/15</td>
-                
+
                 <c:if test="${s.attends.size() eq 0}"> 
                     <c:forEach begin="0" end="14" step="1" var="i">
                         <td>
-                            not yet
+                            --
                         </td>
                     </c:forEach>
                 </c:if>
-                        
+
                 <c:if test="${s.attends.size() ne 0}">
                     <c:forEach begin="0" end="${s.attends.size()-1}" step="1" var="i">
                         <td>
-                            ${s.attends.get(i).attend ? "present":"absent"}
+                            <c:if test="${!s.attends.get(i).attend}">
+                                <img src="img/delete-icon.png" alt=""/>
+                            </c:if>
+
+                            <c:if test="${s.attends.get(i).attend}">
+                                <img src="img/Check-icon.png" alt=""/>
+                            </c:if>
                         </td>
                     </c:forEach>
                     <c:forEach begin="0" end="${15-s.attends.size()-1}" step="1" var="i">
                         <td>
-                            not yet
+                            --
                         </td>
                     </c:forEach>
                 </c:if>
