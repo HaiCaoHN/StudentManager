@@ -25,6 +25,10 @@
         <servlet-class>controller.ViewGroupAllAttendanceController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>controller.ExamController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Test</servlet-name>
         <servlet-class>controller.Test</servlet-class>
     </servlet>
@@ -53,8 +57,12 @@
         <url-pattern>/view_all</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam_manage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Test</servlet-name>
-        <url-pattern>/Test</url-pattern>
+        <url-pattern>/test</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
