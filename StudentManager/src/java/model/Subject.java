@@ -35,5 +35,11 @@ public class Subject {
     public void setTotalSlot(int totalSlot) {
         this.totalSlot = totalSlot;
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+    
     
 }

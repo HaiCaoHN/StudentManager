@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import model.Group;
 import model.Lecture;
 import model.Session;
+import model.Subject;
 import model.TimeSlot;
 
 /**
@@ -43,7 +44,9 @@ public class SessionDBContext extends DBContext<Session> {
                 s.setRoom(rs.getString("room"));
                 s.setStatus(rs.getBoolean("status"));
                 Group g = new Group();
-                g.setSubject(rs.getString("subjectID"));
+                Subject sj = new Subject();
+                sj.setId(rs.getString("subjectID"));
+                g.setSubject(sj);
                 g.setId(rs.getString("gid"));
                 s.setGroup(g);
                 TimeSlot slot = new TimeSlot();

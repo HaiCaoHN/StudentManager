@@ -43,7 +43,7 @@
             <script>
                 var content = document.getElementById("head");
                 var html = "";
-                for (var i = 1; i <= 15; i++) {
+                for (var i = 1; i <= ${group.subject.totalSlot}; i++) {
                     html += "<td>Slot " + i + " </td>";
                 }
                 content.innerHTML += html;
@@ -51,16 +51,17 @@
         </tr>
     </thead>
     <tbody>
+        
         <c:forEach items="${students}" var="s">
             <tr>
                 <td>${students.indexOf(s)+1}</td>
-                <td>${gid}</td>
+                <td>${group.id}</td>
                 <td>${s.code}</td>
                 <td>${s.name}</td>
-                <td>${s.getAbsent()}/15</td>
+                <td>${s.getAbsent()}/${group.subject.totalSlot}</td>
 
                 <c:if test="${s.attends.size() eq 0}"> 
-                    <c:forEach begin="0" end="14" step="1" var="i">
+                    <c:forEach begin="0" end="${group.subject.totalSlot-1}" step="1" var="i">
                         <td>
                             --
                         </td>
@@ -79,7 +80,7 @@
                             </c:if>
                         </td>
                     </c:forEach>
-                    <c:forEach begin="0" end="${15-s.attends.size()-1}" step="1" var="i">
+                    <c:forEach begin="0" end="${group.subject.totalSlot-s.attends.size()-1}" step="1" var="i">
                         <td>
                             --
                         </td>

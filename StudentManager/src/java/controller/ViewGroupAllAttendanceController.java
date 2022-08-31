@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AttendanceDBContext;
+import dal.GroupDBContext;
 import dal.StudentDBContext;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -47,9 +48,11 @@ public class ViewGroupAllAttendanceController extends BaseRequiredAuthentication
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        GroupDBContext dbGroup = new GroupDBContext();
         String gid = request.getParameter("gid");
         Group group = new Group();
         group.setId(gid);
+        group = dbGroup.get(group);
         StudentDBContext dbStudent = new StudentDBContext();
         AttendanceDBContext dbAttend = new AttendanceDBContext();
         ArrayList<Student> students = dbStudent.listStudentByGroup(group);
@@ -65,7 +68,7 @@ public class ViewGroupAllAttendanceController extends BaseRequiredAuthentication
             }
         }
         request.setAttribute("students", students);
-        request.setAttribute("gid", gid);
+        request.setAttribute("group", group);
         request.getRequestDispatcher("view/view_all_attendance.jsp").forward(request, response);
     }
 

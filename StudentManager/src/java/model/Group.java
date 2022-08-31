@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * @author HAICAO
  */
 public class Group {
-    private String id, subject, lecture;
+    private String id, lecture;
+    private Subject subject;
     private ArrayList<Enroll> enrolls = new ArrayList<>();
     
     public String getId() {
@@ -30,11 +31,11 @@ public class Group {
         this.id = id;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
