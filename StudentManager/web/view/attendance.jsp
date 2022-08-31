@@ -13,6 +13,7 @@
         <title>Attendance Page</title>
         <link href="css/viewTemplate.css" rel="stylesheet" type="text/css"/>
         <link href="css/nav_template.css" rel="stylesheet" type="text/css"/>
+        <link href="css/button_template.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="hero">
@@ -75,7 +76,7 @@
                 </c:forEach>
 
             </table> <br>
-            <input type="submit" value="Save">
+            <button type="submit" class="button-1" role="button">Save</button>
         </form>
     </body>
 </html>
